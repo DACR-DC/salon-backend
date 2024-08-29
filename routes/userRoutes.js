@@ -24,5 +24,12 @@ router.put('/usuario/:id_login', [
 ], userController.actualizarUsuario);
 
 router.delete('/usuario/:id_login', userController.eliminarUsuario);
-
+router.post(
+    '/login',
+    [
+      body('usuario_login').notEmpty().withMessage('El usuario es requerido'),
+      body('contrasena_login').notEmpty().withMessage('La contraseña es requerida')
+    ],
+    userController.login
+  );
 module.exports = router;

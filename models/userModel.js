@@ -13,7 +13,9 @@ exports.crearUsuario = (usuario_login, contrasena_login, callback) => {
 exports.obtenerUsuarios = (callback) => {
     db.query('SELECT * FROM tbl_login', callback);
 };
-
+exports.loginUser = (usuario_login, callback) => {
+    db.query('SELECT * FROM tbl_login WHERE usuario_login = ?', [usuario_login], callback);
+};
 exports.actualizarUsuario = (id_login, usuario_actualizado, callback) => {
     const { usuario_login, contrasena_login } = usuario_actualizado;
     const hashedPassword = contrasena_login ? bcrypt.hashSync(contrasena_login, 10) : undefined;
