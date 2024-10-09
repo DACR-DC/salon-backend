@@ -1,5 +1,7 @@
 const mysql = require('mysql2');
 
+
+
 const db = mysql.createConnection({
   host: 'mysql-26f6774d-miumg-96e0.f.aivencloud.com',
   user: 'avnadmin',
