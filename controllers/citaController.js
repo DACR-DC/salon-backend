@@ -67,13 +67,42 @@ exports.actualizarCita = (req, res) => {
     }
 
     const { id_cita } = req.params;
-    const datosActualizados = req.body;
+    let { fecha_cita, hora_inicio_cita, hora_fin_cita, id_cliente, id_servicio } = req.body;
+
+    const startDateTime = new Date(`${fecha_cita}T${hora_inicio_cita}`);
+    const endDateTime = new Date(`${fecha_cita}T${hora_fin_cita}`);
+
+    startDateTime.setHours(startDateTime.getHours() - 6);
+    endDateTime.setHours(endDateTime.getHours() - 6);
+
+    const fechaOriginal = new Date(`${fecha_cita}T00:00:00`);
+    if (startDateTime < fechaOriginal) {
+        startDateTime.setDate(startDateTime.getDate() - 1);
+        endDateTime.setDate(endDateTime.getDate() - 1);
+    }
+
+    const fechaCitaAjustada = startDateTime.toISOString().split("T")[0];
+    const horaInicioAjustada = startDateTime.toTimeString().split(" ")[0];
+    const horaFinAjustada = endDateTime.toTimeString().split(" ")[0];
+
+    console.log('Fecha ajustada:', fechaCitaAjustada);
+    console.log('Hora de inicio ajustada:', horaInicioAjustada);
+    console.log('Hora de fin ajustada:', horaFinAjustada);
+
+
+    const datosActualizados = {
+        fecha_cita: fechaCitaAjustada,
+        hora_inicio_cita: horaInicioAjustada,
+        hora_fin_cita: horaFinAjustada,
+        id_cliente,
+        id_servicio
+    };
 
     citaModel.actualizarCita(id_cita, datosActualizados, (err, result) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.json({ message: 'Cita actualizada' });
+        res.json({ message: 'Cita actualizada', id_cita, datosActualizados });
     });
 };
 
