@@ -115,3 +115,4 @@ exports.eliminarCita = (req, res) => {
         res.json({ message: 'Cita eliminada' });
     });
 };
+
