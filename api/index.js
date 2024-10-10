@@ -8,6 +8,7 @@ const servicioRoutes = require('../routes/servicioRoutes');
 const citaRoute = require('../routes/citaRoute');
 
 require('../config/db'); 
+require('../jobs/cronJobs');
 
 app.use(express.json());
 app.use(cors());
