@@ -1,5 +1,4 @@
 const db = require('../config/db');
-
 const Cita = {};
 
 Cita.crearCita = (fecha_cita, hora_inicio_cita, hora_fin_cita, id_cliente, id_servicio, callback) => {
@@ -22,5 +21,11 @@ Cita.eliminarCita = (id_cita, callback) => {
     const sql = 'DELETE FROM tbl_cita WHERE id_cita = ?';
     db.query(sql, [id_cita], callback);
 };
+
+Cita.ELiminarTodasLasCitasM = (fechaInicio,fechaFin, callback) => {
+    const sql = 'DELETE FROM tbl_cita WHERE fecha_cita BETWEEN ? AND ?';
+    db.query(sql, [fechaInicio,fechaFin], callback);
+};
+
 
 module.exports = Cita;
