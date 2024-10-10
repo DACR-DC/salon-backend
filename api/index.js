@@ -10,7 +10,14 @@ const citaRoute = require('../routes/citaRoute');
 require('../config/db'); 
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["http://localhost:3000", "https://salon-frontend-seven.vercel.app/"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }
+));
 
 
 app.get('/', (req, res) => {
